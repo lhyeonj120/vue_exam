@@ -33,12 +33,12 @@ export default {
     }
   },
   emits: ['toggle-todo', 'delete-todo'],
-  setup(props, context){
+  setup(props, {emit}){
     const toggleTodo = (index) => {
-        context.emit('toggle-todo', index);
+        emit('toggle-todo', index);
     }
     const deleteTodo = (index) => {
-        context.emit('delete-todo', index);
+        emit('delete-todo', index);
     }
     return{
         toggleTodo,
