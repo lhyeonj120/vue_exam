@@ -1,7 +1,7 @@
 <template>
   <div class="container"> <!-- 중간정렬 -->
     <h2>To-Do List</h2>
-    <TodoSimpleForm/>
+    <TodoSimpleForm @add-todo="addTodo"/>
     <div v-if="!todos.length">
       추가된 todo가 없습니다.
     </div>
@@ -45,9 +45,14 @@ export default {
       todos.value.splice(index, 1);
     }
 
+    const addTodo = (todo) => {
+      todos.value.push(todo);
+    }
+
     return{
       todos,
       deleteTodo,
+      addTodo,
     }
   }
 }
