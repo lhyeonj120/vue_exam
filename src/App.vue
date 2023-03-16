@@ -1,30 +1,10 @@
 <template>
   <div class="container"> <!-- 중간정렬 -->
-    <h2>To-Do</h2>
-    <form 
-      @submit.prevent="onSubmit"  
-    >
-      <div class="d-flex">
-        <div class="flex-grow-1 mr-2">
-          <input 
-            class="form-control"
-            type="text" 
-            v-model="todo"
-            placeholder="Type new to-do"
-          > 
-        </div>
-
-        <div>
-          <button 
-            class="btn btn-primary"
-            type="submit"
-          >
-            Add
-          </button>
-        </div>
-      </div>
-      <div v-if="hasError" style="color:red">This is cannot be empty</div>
-    </form>
+    <h2>To-Do List</h2>
+    <TodoSimpleForm/>
+    <div v-if="!todos.length">
+      추가된 todo가 없습니다.
+    </div>
     <div
       v-for="(todo, index) in todos"
       :key="todo.id" 
@@ -52,36 +32,21 @@
 
 <script>
 import {ref} from 'vue';
+import TodoSimpleForm from './components/TodoSimpleForm.vue';
 
 export default {
+  components: {
+    TodoSimpleForm
+  },
   setup(){
-    const todo = ref('');
     const todos = ref([]);
-    const hasError = ref(false);
-
-    const onSubmit = () => {
-      if(todo.value == ''){
-        hasError.value = true;
-      }else{
-        todos.value.push({
-          id: Date.now(),
-          subject: todo.value,
-          completed: false
-        }); //객체 형태로 넣기
-        hasError.value = false;
-        todo.value = ''
-      }
-    }
-
+    
     const deleteTodo = (index) => {
       todos.value.splice(index, 1);
     }
 
     return{
-      todo, 
-      onSubmit,
       todos,
-      hasError,
       deleteTodo,
     }
   }
