@@ -12,6 +12,9 @@
     <div v-if="!todos.length">
       추가된 todo가 없습니다.
     </div>
+    <div v-if="!filteredTodos.length">
+      There is noting to display
+    </div>
     <TodoList :todos="filteredTodos" 
       @toggle-todo="toggleTodo" 
       @delete-todo="deleteTodo"/>
