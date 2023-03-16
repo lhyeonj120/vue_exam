@@ -28,6 +28,7 @@
 <script>
 import {ref} from 'vue';
 export default {
+    emits: ['add-todo'],
     setup(props, context){
         const todo = ref('');
         const hasError = ref(false);
@@ -41,7 +42,7 @@ export default {
                     subject: todo.value,
                     completed: false
                 });
-                
+
                 hasError.value = false;
                 todo.value = ''
             }
