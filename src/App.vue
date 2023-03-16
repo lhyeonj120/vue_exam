@@ -48,11 +48,7 @@ import {ref} from 'vue';
 export default {
   setup(){
     const todo = ref('');
-    const todos = ref([
-      {id:1, subject:'study'},
-      {id:2, subject:'house'}
-    ]);
-
+    const todos = ref([]);
     const hasError = ref(false);
 
     const onSubmit = () => {
@@ -61,11 +57,12 @@ export default {
       }else{
         todos.value.push({
           id: Date.now(),
-          subject: todo.value
+          subject: todo.value,
+          completed: false
         }); //객체 형태로 넣기
         hasError.value = false;
+        todo.value = ''
       }
-      
     }
 
     return{
