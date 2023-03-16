@@ -38,6 +38,11 @@
             :class="{todo: todo.completed}">
             {{todo.subject}}
           </label>
+          <div>
+            <button class="btn btn-danger btn-sm">
+              Delete
+            </button>
+          </div>
         </div>
       </div>
     </div>
