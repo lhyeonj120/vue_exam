@@ -26,7 +26,7 @@
       <div v-if="hasError" style="color:red">This is cannot be empty</div>
     </form>
     <div
-      v-for="todo in todos"
+      v-for="(todo, index) in todos"
       :key="todo.id" 
       class="card mt-2">
       <div class="card-body p-2 d-flex align-items-center">
@@ -40,7 +40,8 @@
           </label>
         </div>
         <div>
-          <button class="btn btn-danger btn-sm">
+          <button class="btn btn-danger btn-sm"
+            @click="deleteTodo(index)">
             Delete
           </button>
         </div>
@@ -72,11 +73,16 @@ export default {
       }
     }
 
+    const deleteTodo = (index) => {
+      todos.value.splice(index, 1);
+    }
+
     return{
       todo, 
       onSubmit,
       todos,
       hasError,
+      deleteTodo,
     }
   }
 }
