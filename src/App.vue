@@ -1,9 +1,9 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <router-link class="navbar-brand" to="/">Home</router-link>
+    <router-link class="navbar-brand" :to="{name: 'Home'}">Home</router-link>
     <ul class="navbar-nav mr-auto">
       <li class="nav-iem active">
-        <router-link class="nav-link" to="/todos">Todos</router-link>
+        <router-link class="nav-link" :to="{name: 'Todos'}">Todos</router-link>
       </li>
     </ul>
   </nav>

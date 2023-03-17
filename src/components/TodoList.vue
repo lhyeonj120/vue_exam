@@ -47,7 +47,13 @@ export default {
     }
     const moveToPage = (todoId) => {
         console.log(todoId);
-        router.push('/todos/' + todoId);
+        //router.push('/todos/' + todoId);
+        router.push({
+            name: 'Todo',
+            params: {
+                id: todoId
+            }
+        });
     }
     return{
         toggleTodo,
