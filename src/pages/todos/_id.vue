@@ -35,7 +35,8 @@
     <button class="btn btn-primary ml-2" @click="moveToListPage">Cancel</button>
   </form>
   <Toast v-if="showToast"
-    :message="toastMessage"/>
+    :message="toastMessage"
+    :type="toastAlertType"/>
 </template>
 
 <script>
@@ -59,13 +60,16 @@ export default {
 
         const showToast = ref(false);
         const toastMessage = ref('');
+        const toastAlertType = ref('');
 
-        const triggerToast = (message) => {
+        const triggerToast = (message, type = 'success') => {
             showToast.value = true;
             toastMessage.value = message;
+            toastAlertType.value = type;
             setTimeout(() => {
                 showToast.value = false;
                 toastMessage.value = '';
+                toastAlertType.value = '';
             }, 3000);
         }
 
@@ -92,7 +96,7 @@ export default {
                 loading.value = false;
             }catch(err){
                 console.log(err);
-                triggerToast('something went wrong ㅠㅠ');
+                triggerToast('something went wrong ㅠㅠ', 'danger');
             }
         }
 
@@ -119,6 +123,7 @@ export default {
             showToast,
             triggerToast,
             toastMessage,
+            toastAlertType,
         }
     }
 }
