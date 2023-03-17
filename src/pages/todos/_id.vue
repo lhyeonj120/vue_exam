@@ -34,6 +34,7 @@
     </button>
     <button class="btn btn-primary ml-2" @click="moveToListPage">Cancel</button>
   </form>
+  <Toast v-if="showToast"/>
 </template>
 
 <script>
@@ -41,8 +42,12 @@ import {useRoute, useRouter} from 'vue-router';
 import axios from 'axios';
 import {ref, computed} from '@vue/reactivity';
 import _ from 'lodash';
+import Toast from '@/components/Toast.vue';
 
 export default {
+    components: {
+        Toast
+    },
     setup(){
         const route = useRoute();
         const router = useRouter();
@@ -51,11 +56,19 @@ export default {
         const todoId = route.params.id;
         const originalTodo = ref(null);
 
+        const showToast = ref(false);
+
+        const triggerToast = () => {
+            showToast.value = true;
+        }
+
         const onSave = async () => {
             const res = await axios.put(`http://localhost:3000/todos/${todoId}`, {
                 subject: todo.value.subject,
                 completed: todo.value.completed
             });
+            originalTodo.value = {...res.data};
+            triggerToast();
             console.log(res);
         }
 
@@ -91,6 +104,8 @@ export default {
             moveToListPage,
             onSave,
             todoUpdated,
+            showToast,
+            triggerToast,
         }
     }
 }
