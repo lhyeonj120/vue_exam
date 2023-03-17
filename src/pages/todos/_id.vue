@@ -63,6 +63,10 @@ export default {
         const triggerToast = (message) => {
             showToast.value = true;
             toastMessage.value = message;
+            setTimeout(() => {
+                showToast.value = false;
+                toastMessage.value = '';
+            }, 3000);
         }
 
         const onSave = async () => {
@@ -80,11 +84,16 @@ export default {
         });
 
         const getTodo = async () => {
-            const res = await axios.get(`http://localhost:3000/todos/${todoId}`);
-            // 깊은 복사, 같은 주소값을 가지지 않도록
-            todo.value = {...res.data};
-            originalTodo.value = {...res.data};
-            loading.value = false;
+            try{
+                const res = await axios.get(`http://localhost:3000/todos/${todoId}`);
+                // 깊은 복사, 같은 주소값을 가지지 않도록
+                todo.value = {...res.data};
+                originalTodo.value = {...res.data};
+                loading.value = false;
+            }catch(err){
+                console.log(err);
+                triggerToast('something went wrong ㅠㅠ');
+            }
         }
 
         const toggleTodoStatus = () => {
