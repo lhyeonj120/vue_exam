@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { watchEffect } from 'vue';
 export default {
   props: {
     todos:{
@@ -34,6 +35,10 @@ export default {
   },
   emits: ['toggle-todo', 'delete-todo'],
   setup(props, {emit}){
+    watchEffect(() => {
+        console.log(props.todos.length);
+    });
+    
     const toggleTodo = (index) => {
         emit('toggle-todo', index);
     }
