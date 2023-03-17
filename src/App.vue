@@ -6,6 +6,7 @@
       type="text" 
       v-model="searchText"
       placeholder="Search"
+      @keyup.enter="searchTodo"
     >
     <hr>
     <TodoSimpleForm @add-todo="addTodo"/>
@@ -74,6 +75,12 @@ export default {
         getTodos(1); 
       }, 2000);
     });
+
+    // 즉각적인 검색
+    const searchTodo = () => {
+      clearTimeout(timeout);
+      getTodos(1);
+    }
 
     const numberOfPages = computed(() => {
       return Math.ceil(numberOfTodos.value / limit);
@@ -154,6 +161,7 @@ export default {
       limit,
       currentPage,
       numberOfPages,
+      searchTodo,
     }
   }
 }
