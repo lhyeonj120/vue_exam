@@ -1,5 +1,5 @@
 <template>
-  <div class="container"> <!-- 중간정렬 -->
+  <div> <!-- 중간정렬 -->
     <h2>To-Do List</h2>
     <input 
       class="form-control"
