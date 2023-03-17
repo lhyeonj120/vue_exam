@@ -75,23 +75,15 @@ export default {
       return Math.ceil(numberOfTodos.value / limit);
     });
 
-    // const filteredTodos = computed(() => {
-    //   if(searchText.value){
-    //     console.log(todos.value.length);
-    //     return todos.value.filter(todo => {
-    //       return todo.subject.includes(searchText.value);
-    //     })
-    //   }
-    //   return todos.value;
-    // });
-
     const deleteTodo = async (index) => {
       error.value = '';
       const id = todos.value[index].id;
 
       try{
         await axios.delete('http://localhost:3000/todos/' + id);
-        todos.value.splice(index, 1);
+        // 배열에서 삭제하고 있음
+        //todos.value.splice(index, 1);
+        getTodos(1);
       }catch(err){
         console.log(err);
         error.value = 'Something went wrong';
@@ -118,11 +110,13 @@ export default {
       // db에 저장
       try{
         // await : 해당 작업을 먼저 실행해줘
-        const res = await axios.post('http://localhost:3000/todos', {
+        await axios.post('http://localhost:3000/todos', {
           subject: todo.subject,
           completed: todo.completed
         });
-        todos.value.push(res.data);
+        // 배열 안에 넣고 있음
+        //todos.value.push(res.data);
+        getTodos(1);
       }catch(err){
         console.log(err);
         error.value = 'Something went wrong';
@@ -150,7 +144,6 @@ export default {
       addTodo,
       toggleTodo,
       searchText,
-      // filteredTodos,
       error,
       getTodos,
       numberOfTodos,
