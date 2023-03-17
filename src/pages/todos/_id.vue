@@ -26,7 +26,12 @@
             </div>
         </div>
     </div>
-    <button type="submit" class="btn btn-primary">Save</button>
+    <button 
+        type="submit" 
+        class="btn btn-primary"
+        :disabled="!todoUpdated">
+        Save
+    </button>
     <button class="btn btn-primary ml-2" @click="moveToListPage">Cancel</button>
   </form>
 </template>
@@ -34,7 +39,8 @@
 <script>
 import {useRoute, useRouter} from 'vue-router';
 import axios from 'axios';
-import {ref} from '@vue/reactivity';
+import {ref, computed} from '@vue/reactivity';
+import _ from 'lodash';
 
 export default {
     setup(){
@@ -43,6 +49,7 @@ export default {
         const todo = ref(null);
         const loading = ref(true);
         const todoId = route.params.id;
+        const originalTodo = ref(null);
 
         const onSave = async () => {
             const res = await axios.put(`http://localhost:3000/todos/${todoId}`, {
@@ -52,9 +59,15 @@ export default {
             console.log(res);
         }
 
+        const todoUpdated = computed(() => {
+            return !_.isEqual(todo.value, originalTodo.value);
+        });
+
         const getTodo = async () => {
             const res = await axios.get(`http://localhost:3000/todos/${todoId}`);
-            todo.value = res.data;
+            // 깊은 복사, 같은 주소값을 가지지 않도록
+            todo.value = {...res.data};
+            originalTodo.value = {...res.data};
             loading.value = false;
         }
 
@@ -77,6 +90,7 @@ export default {
             toggleTodoStatus,
             moveToListPage,
             onSave,
+            todoUpdated,
         }
     }
 }
