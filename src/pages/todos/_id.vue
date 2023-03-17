@@ -15,8 +15,10 @@
             <div class="form-group">
                 <label>Status</label>
                 <div>
-                    <button class="btn btn-danger">
-                        Incomplete
+                    <button
+                        class="btn"
+                        :class="todo.completed ? 'btn-success' : 'btn-danger'">
+                        {{todo.completed ? 'Completed' : 'Incompleted'}}
                     </button>
                 </div>
             </div>
