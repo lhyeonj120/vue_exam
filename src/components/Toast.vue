@@ -1,13 +1,18 @@
 <template>
   <div
     class="alert alert-success toast-box" role="alert">
-    Toast Alert
+    {{message}}
   </div>
 </template>
 
 <script>
 export default {
-
+    props: {
+        message: {
+            type: String,
+            required: true
+        }
+    }
 }
 </script>
 

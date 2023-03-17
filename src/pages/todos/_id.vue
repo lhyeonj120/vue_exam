@@ -34,7 +34,8 @@
     </button>
     <button class="btn btn-primary ml-2" @click="moveToListPage">Cancel</button>
   </form>
-  <Toast v-if="showToast"/>
+  <Toast v-if="showToast"
+    :message="toastMessage"/>
 </template>
 
 <script>
@@ -57,9 +58,11 @@ export default {
         const originalTodo = ref(null);
 
         const showToast = ref(false);
+        const toastMessage = ref('');
 
-        const triggerToast = () => {
+        const triggerToast = (message) => {
             showToast.value = true;
+            toastMessage.value = message;
         }
 
         const onSave = async () => {
@@ -68,7 +71,7 @@ export default {
                 completed: todo.value.completed
             });
             originalTodo.value = {...res.data};
-            triggerToast();
+            triggerToast('Successfully save!!!');
             console.log(res);
         }
 
@@ -106,6 +109,7 @@ export default {
             todoUpdated,
             showToast,
             triggerToast,
+            toastMessage,
         }
     }
 }
