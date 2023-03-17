@@ -4,9 +4,23 @@
     Loading...
   </div>
   <form v-else>
-    <div class="form-group">
-        <label>Todo Subject</label>
-        <input v-model="todo.subject" type="text" class="form-control">
+    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label>Todo Subject</label>
+                <input v-model="todo.subject" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="form-group">
+                <label>Status</label>
+                <div>
+                    <button class="btn btn-danger">
+                        Incomplete
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
     <button class="btn btn-primary">Save</button>
   </form>
