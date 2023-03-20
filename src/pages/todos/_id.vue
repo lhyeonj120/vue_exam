@@ -44,7 +44,7 @@
 <script>
 import {useRoute, useRouter} from 'vue-router';
 import axios from 'axios';
-import {ref, computed, onBeforeMount, onMounted, onBeforeUpdate, onUpdated} from 'vue';
+import {ref, computed, onBeforeMount, onMounted, onBeforeUpdate, onUpdated, onBeforeUnmount, onUnmounted} from 'vue';
 import _ from 'lodash';
 import Toast from '@/components/Toast.vue';
 
@@ -67,6 +67,14 @@ export default {
 
         onUpdated(() => {
             console.log('updated');
+        });
+
+        onBeforeUnmount(() => {
+            console.log('before unmout');
+        });
+
+        onUnmounted(() => {
+            console.log('unmounted');
         });
         console.log('hello');
 
