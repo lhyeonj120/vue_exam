@@ -44,7 +44,7 @@
 <script>
 import {useRoute, useRouter} from 'vue-router';
 import axios from 'axios';
-import {ref, computed, onBeforeMount, onMounted} from 'vue';
+import {ref, computed, onBeforeMount, onMounted, onBeforeUpdate, onUpdated} from 'vue';
 import _ from 'lodash';
 import Toast from '@/components/Toast.vue';
 
@@ -56,10 +56,19 @@ export default {
         onBeforeMount(() => {
             console.log(document.querySelector('#kosa'));
         });
-        
+
         onMounted(() => {
             console.log(document.querySelector('#kosa'));
         });
+
+        onBeforeUpdate(() => {
+            console.log('before update');
+        });
+
+        onUpdated(() => {
+            console.log('updated');
+        });
+        console.log('hello');
 
         const route = useRoute();
         const router = useRouter();
