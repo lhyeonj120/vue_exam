@@ -39,7 +39,7 @@
             {{editing ? 'Update' : 'Create'}}
         </button>
         <button class="btn btn-primary ml-2" @click="moveToListPage">Cancel</button>
-    </form>
+    </form> 
     <Toast v-if="showToast"
         :message="toastMessage"
         :type="toastAlertType"/>
@@ -84,13 +84,26 @@ export default {
         } = useToast();
 
         const onSave = async () => {
-            const res = await axios.put(`http://localhost:3000/todos/${todoId}`, {
-                subject: todo.value.subject,
-                completed: todo.value.completed
-            });
-            originalTodo.value = {...res.data};
-            triggerToast('Successfully save!!!');
-            console.log(res);
+            try{
+                let res;
+                if(props.editing){
+                    res = await axios.put(`http://localhost:3000/todos/${todoId}`, {
+                        subject: todo.value.subject,
+                        completed: todo.value.completed
+                    });
+                }else{
+                    res = await axios.post('http://localhost:3000/todos', {
+                        subject: todo.value.subject,
+                        completed: todo.value.completed
+                    });
+                }
+
+                originalTodo.value = {...res.data};
+                triggerToast('Successfully save!!!');
+            }catch(err){
+                console.log(err);
+                triggerToast('something went wrong ㅠㅠ', 'danger');
+            }
         }
 
         const todoUpdated = computed(() => {
