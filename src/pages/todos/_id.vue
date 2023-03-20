@@ -47,6 +47,7 @@ import axios from 'axios';
 import {ref, computed, onUnmounted} from 'vue';
 import _ from 'lodash';
 import Toast from '@/components/Toast.vue';
+import {useToast} from '@/composables/toast';
 
 export default {
     components: {
@@ -65,22 +66,12 @@ export default {
         const todoId = route.params.id;
         const originalTodo = ref(null);
 
-        const showToast = ref(false);
-        const toastMessage = ref('');
-        const toastAlertType = ref('');
-        const timeout = ref(null);
-
-        const triggerToast = (message, type = 'success') => {
-            showToast.value = true;
-            toastMessage.value = message;
-            toastAlertType.value = type;
-            timeout.value = setTimeout(() => {
-                console.log('hello');
-                showToast.value = false;
-                toastMessage.value = '';
-                toastAlertType.value = '';
-            }, 3000);
-        }
+        const {
+            toastMessage,
+            toastAlertType,
+            showToast,
+            triggerToast
+        } = useToast();
 
         const onSave = async () => {
             const res = await axios.put(`http://localhost:3000/todos/${todoId}`, {
