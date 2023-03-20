@@ -36,7 +36,7 @@
             type="submit" 
             class="btn btn-primary"
             :disabled="!todoUpdated">
-            Save
+            {{editing ? 'Update' : 'Create'}}
         </button>
         <button class="btn btn-primary ml-2" @click="moveToListPage">Cancel</button>
     </form>
