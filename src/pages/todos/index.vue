@@ -2,22 +2,14 @@
   <div> <!-- 중간정렬 -->
     <div class="d-flex justify-content-between mt-3">
       <h2>To-Do List</h2>
-      <!-- <input 
-      class="form-control"
-      type="text" 
-      v-model="searchText"
-      placeholder="Search"
-      @keyup.enter="searchTodo"
-    > -->
-      <button class="btn btn-primary">
+
+      <button class="btn btn-primary"
+        @click="moveToCreatePage">
         Create Todo
       </button>
     </div>
     <hr>
-    <TodoSimpleForm @add-todo="addTodo"/>
-    <div style="color:red">
-      {{error}}
-    </div>
+    
     <div v-if="!todos.length">
       추가된 todo가 없습니다.
     </div>
@@ -60,14 +52,13 @@
 <script>
 import {ref, computed, watch} from 'vue';
 import axios from "axios";
-import TodoSimpleForm from '@/components/TodoSimpleForm.vue';
 import TodoList from '@/components/TodoList.vue';
 import Toast from '@/components/Toast.vue';
 import {useToast} from '@/composables/toast';
+import {useRouter} from 'vue-router';
 
 export default {
   components: {
-    TodoSimpleForm,
     TodoList,
     Toast
   },
@@ -79,6 +70,7 @@ export default {
     const limit = 5;
     const currentPage = ref(1);
     let timeout = null;
+    const router = useRouter();
 
     const {
       toastMessage,
@@ -93,6 +85,12 @@ export default {
         getTodos(1); 
       }, 2000);
     });
+
+    const moveToCreatePage = () => {
+      router.push({
+        name: 'TodoCreate'
+      });
+    }
 
     // 즉각적인 검색
     const searchTodo = () => {
@@ -184,6 +182,7 @@ export default {
       triggerToast,
       toastMessage,
       toastAlertType,
+      moveToCreatePage,
     }
   }
 }
