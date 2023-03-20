@@ -54,10 +54,6 @@ export default {
         Toast
     },
     setup(){
-        onUnmounted(() => {
-            console.log('unmounted');
-            clearTimeout(timeout.value);
-        });
 
         const route = useRoute();
         const router = useRouter();
