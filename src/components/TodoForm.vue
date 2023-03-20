@@ -86,20 +86,23 @@ export default {
         const onSave = async () => {
             try{
                 let res;
+                const data = {
+                    subject: todo.value.subject,
+                    completed: todo.value.completed,
+                    body: todo.value.body
+                }
+
                 if(props.editing){
-                    res = await axios.put(`http://localhost:3000/todos/${todoId}`, {
-                        subject: todo.value.subject,
-                        completed: todo.value.completed
-                    });
+                    res = await axios.put(`http://localhost:3000/todos/${todoId}`, data);
                 }else{
-                    res = await axios.post('http://localhost:3000/todos', {
-                        subject: todo.value.subject,
-                        completed: todo.value.completed
-                    });
+                    res = await axios.post('http://localhost:3000/todos', data);
+                    todo.value.subject = '';
+                    todo.value.body = '';
                 }
 
                 originalTodo.value = {...res.data};
-                triggerToast('Successfully save!!!');
+                const message = 'Successfully ' + (props.editing ? 'Update!!!!!' : 'Create!!!!');
+                triggerToast(message);
             }catch(err){
                 console.log(err);
                 triggerToast('something went wrong ㅠㅠ', 'danger');
