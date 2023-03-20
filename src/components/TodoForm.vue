@@ -52,6 +52,12 @@ export default {
     components: {
         Toast
     },
+    props: {
+        editing: {
+            type: Boolean,
+            default: false
+        }
+    },
     setup(){
 
         const route = useRoute();
