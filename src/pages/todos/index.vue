@@ -1,13 +1,18 @@
 <template>
   <div> <!-- 중간정렬 -->
-    <h2>To-Do List</h2>
-    <input 
+    <div class="d-flex justify-content-between mt-3">
+      <h2>To-Do List</h2>
+      <!-- <input 
       class="form-control"
       type="text" 
       v-model="searchText"
       placeholder="Search"
       @keyup.enter="searchTodo"
-    >
+    > -->
+      <button class="btn btn-primary">
+        Create Todo
+      </button>
+    </div>
     <hr>
     <TodoSimpleForm @add-todo="addTodo"/>
     <div style="color:red">
