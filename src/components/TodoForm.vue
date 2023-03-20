@@ -10,7 +10,7 @@
                     <input v-model="todo.subject" type="text" class="form-control">
                 </div>
             </div>
-            <div class="col-6">
+            <div v-if="editing" class="col-6">
                 <div class="form-group">
                     <label>Status</label>
                     <div>
@@ -22,6 +22,13 @@
                             {{todo.completed ? 'Completed' : 'Incompleted'}}
                         </button>
                     </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="form-group">
+                    <label>Body</label>
+                    <textarea v-model="todo.body" class="form-control" cols="30" rows="10">
+                    </textarea>
                 </div>
             </div>
         </div>
@@ -61,7 +68,9 @@ export default {
         const route = useRoute();
         const router = useRouter();
         const todo = ref({
-            subejct: ''
+            subejct: '',
+            completed: false,
+            body: ''
         });
         const loading = ref(false);
         const todoId = route.params.id;
