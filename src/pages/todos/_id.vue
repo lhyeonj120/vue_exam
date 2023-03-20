@@ -44,7 +44,7 @@
 <script>
 import {useRoute, useRouter} from 'vue-router';
 import axios from 'axios';
-import {ref, computed, onBeforeMount, onMounted, onBeforeUpdate, onUpdated, onBeforeUnmount, onUnmounted} from 'vue';
+import {ref, computed, onUnmounted} from 'vue';
 import _ from 'lodash';
 import Toast from '@/components/Toast.vue';
 
@@ -53,30 +53,10 @@ export default {
         Toast
     },
     setup(){
-        onBeforeMount(() => {
-            console.log(document.querySelector('#kosa'));
-        });
-
-        onMounted(() => {
-            console.log(document.querySelector('#kosa'));
-        });
-
-        onBeforeUpdate(() => {
-            console.log('before update');
-        });
-
-        onUpdated(() => {
-            console.log('updated');
-        });
-
-        onBeforeUnmount(() => {
-            console.log('before unmout');
-        });
-
         onUnmounted(() => {
             console.log('unmounted');
+            clearTimeout(timeout.value);
         });
-        console.log('hello');
 
         const route = useRoute();
         const router = useRouter();
@@ -88,12 +68,14 @@ export default {
         const showToast = ref(false);
         const toastMessage = ref('');
         const toastAlertType = ref('');
+        const timeout = ref(null);
 
         const triggerToast = (message, type = 'success') => {
             showToast.value = true;
             toastMessage.value = message;
             toastAlertType.value = type;
-            setTimeout(() => {
+            timeout.value = setTimeout(() => {
+                console.log('hello');
                 showToast.value = false;
                 toastMessage.value = '';
                 toastAlertType.value = '';
