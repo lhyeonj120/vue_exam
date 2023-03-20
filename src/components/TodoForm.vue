@@ -36,8 +36,6 @@
     <Toast v-if="showToast"
         :message="toastMessage"
         :type="toastAlertType"/>
-
-    <div id="kosa">Kosa</div>
 </template>
 
 <script>
@@ -58,12 +56,14 @@ export default {
             default: false
         }
     },
-    setup(){
+    setup(props){
 
         const route = useRoute();
         const router = useRouter();
-        const todo = ref(null);
-        const loading = ref(true);
+        const todo = ref({
+            subejct: ''
+        });
+        const loading = ref(false);
         const todoId = route.params.id;
         const originalTodo = ref(null);
 
@@ -89,6 +89,7 @@ export default {
         });
 
         const getTodo = async () => {
+            loading.value = true;
             try{
                 const res = await axios.get(`http://localhost:3000/todos/${todoId}`);
                 // 깊은 복사, 같은 주소값을 가지지 않도록
@@ -96,6 +97,7 @@ export default {
                 originalTodo.value = {...res.data};
                 loading.value = false;
             }catch(err){
+                loading.value = false;
                 console.log(err);
                 triggerToast('something went wrong ㅠㅠ', 'danger');
             }
@@ -112,7 +114,9 @@ export default {
             // router.push('/todos');
         }
         
-        getTodo();
+        if(props.editing){
+            getTodo();
+        }
 
         return{
             todo,
