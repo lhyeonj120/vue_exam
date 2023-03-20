@@ -1,48 +1,50 @@
 <template>
-  <h1>Todo Page</h1>
-  <div v-if="loading">
-    Loading...
-  </div>
-  <form v-else @submit.prevent="onSave">
-    <div class="row">
-        <div class="col-6">
-            <div class="form-group">
-                <label>Todo Subject</label>
-                <input v-model="todo.subject" type="text" class="form-control">
+    <h1>Todo Page</h1>
+    <div v-if="loading">
+        Loading...
+    </div>
+    <form v-else @submit.prevent="onSave">
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Todo Subject</label>
+                    <input v-model="todo.subject" type="text" class="form-control">
+                </div>
             </div>
-        </div>
-        <div class="col-6">
-            <div class="form-group">
-                <label>Status</label>
-                <div>
-                    <button
-                        class="btn"
-                        type="button"
-                        :class="todo.completed ? 'btn-success' : 'btn-danger'"
-                        @click="toggleTodoStatus">
-                        {{todo.completed ? 'Completed' : 'Incompleted'}}
-                    </button>
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Status</label>
+                    <div>
+                        <button
+                            class="btn"
+                            type="button"
+                            :class="todo.completed ? 'btn-success' : 'btn-danger'"
+                            @click="toggleTodoStatus">
+                            {{todo.completed ? 'Completed' : 'Incompleted'}}
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <button 
-        type="submit" 
-        class="btn btn-primary"
-        :disabled="!todoUpdated">
-        Save
-    </button>
-    <button class="btn btn-primary ml-2" @click="moveToListPage">Cancel</button>
-  </form>
-  <Toast v-if="showToast"
-    :message="toastMessage"
-    :type="toastAlertType"/>
+        <button 
+            type="submit" 
+            class="btn btn-primary"
+            :disabled="!todoUpdated">
+            Save
+        </button>
+        <button class="btn btn-primary ml-2" @click="moveToListPage">Cancel</button>
+    </form>
+    <Toast v-if="showToast"
+        :message="toastMessage"
+        :type="toastAlertType"/>
+
+    <div id="kosa">Kosa</div>
 </template>
 
 <script>
 import {useRoute, useRouter} from 'vue-router';
 import axios from 'axios';
-import {ref, computed} from '@vue/reactivity';
+import {ref, computed, onBeforeMount, onMounted} from 'vue';
 import _ from 'lodash';
 import Toast from '@/components/Toast.vue';
 
@@ -51,6 +53,14 @@ export default {
         Toast
     },
     setup(){
+        onBeforeMount(() => {
+            console.log(document.querySelector('#kosa'));
+        });
+        
+        onMounted(() => {
+            console.log(document.querySelector('#kosa'));
+        });
+
         const route = useRoute();
         const router = useRouter();
         const todo = ref(null);
